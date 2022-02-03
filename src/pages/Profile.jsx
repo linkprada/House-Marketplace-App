@@ -84,7 +84,7 @@ function Profile() {
                             type="text"
                             id="email"
                             className="profileEmail"
-                            disabled="true"
+                            disabled
                             value={email}
                         />
                     </form>
