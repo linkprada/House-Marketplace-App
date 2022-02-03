@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { DataBase } from "../firebase.config";
 
 function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +15,8 @@ function SignUp() {
     });
     const { name, email, password } = formData;
 
+    const navigate = useNavigate();
+
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -19,8 +24,30 @@ function SignUp() {
         }));
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+
+        try {
+            const auth = getAuth();
+
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+            const user = userCredential.user;
+
+            const formDataCopy = { ...formData };
+            delete formDataCopy.password;
+            formDataCopy.timestamp = serverTimestamp();
+
+            setDoc(doc(DataBase, "users", user.uid), formDataCopy);
+
+            updateProfile(auth.currentUser, {
+                displayName: name,
+            });
+
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
