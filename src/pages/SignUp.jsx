@@ -6,6 +6,7 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { DataBase } from "../firebase.config";
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -83,6 +84,7 @@ function SignUp() {
                         id="password"
                         value={password}
                         onChange={onChange}
+                        autoComplete="on"
                     />
 
                     <img
@@ -100,6 +102,8 @@ function SignUp() {
                     </button>
                 </div>
             </form>
+
+            <OAuth></OAuth>
 
             <Link to="/sign-in" className="registerLink">
                 Sign In Instead
