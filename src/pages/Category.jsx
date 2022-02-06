@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useState } from "react/cjs/react.development";
+import ListingItem from "../components/ListingItem";
 import Spinner from "../components/Spinner";
 import { DataBase } from "../firebase.config";
 
@@ -58,7 +59,11 @@ function Category() {
                     <main>
                         <ul className="categoryListings">
                             {listings.map((listing) => (
-                                <h1 key={listing.id}>{listing.data.name}</h1>
+                                <ListingItem
+                                    key={listing.id}
+                                    listing={listing.data}
+                                    id={listing.id}
+                                ></ListingItem>
                             ))}
                         </ul>
                     </main>
