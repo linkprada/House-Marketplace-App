@@ -6,6 +6,11 @@ import Spinner from "../components/Spinner";
 import { DataBase } from "../firebase.config";
 import shareIcon from "../assets/svg/shareIcon.svg";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 function Listing() {
     const [listing, setListing] = useState(null);
@@ -53,20 +58,20 @@ function Listing() {
         <main>
             {/* <Helmet>
                 <title>{listing.name}</title>
-            </Helmet>
+            </Helmet> */}
             <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-                {listing.imgUrls.map((url, index) => (
+                {listing.imageUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                         <div
                             style={{
-                                background: `url(${listing.imgUrls[index]}) center no-repeat`,
+                                background: `url(${listing.imageUrls[index]}) center no-repeat`,
                                 backgroundSize: "cover",
                             }}
                             className="swiperSlideDiv"
                         ></div>
                     </SwiperSlide>
                 ))}
-            </Swiper> */}
+            </Swiper>
 
             <div className="shareIconDiv" onClick={copyToClipboard}>
                 <img src={shareIcon} alt="" />
